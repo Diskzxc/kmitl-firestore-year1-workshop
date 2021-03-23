@@ -1,20 +1,143 @@
 <!DOCTYPE html>
 <html lang=en>
     <head>
+      <style>
+        body{
+            background: linear-gradient(to bottom left, #f7a7a7, #a2e7f1);
+          	width: 100vw;
+  			height: 100vh;
+            overflow:hidden;
+        }
+      </style>
         <script src=https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js></script>
         <script src=https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js></script>
 
+        <script>
+            // Helper script
+
+            /**
+             * * Main Runtime
+             * 
+             * ? Anything which related to DOM should be run in this callback.
+             */
+            const main = (callback) => {
+                document.addEventListener("DOMContentLoaded", callback, {
+                    once: true
+                })
+            },
+                /**
+                 * ? Shorten syntax for querying for element id
+                 */
+                id = (id) => {
+                    const reference = document.getElementById(id)
+
+                    return Object.assign(reference, {
+                        on: (event, callback) => {
+                            reference.addEventListener(event, callback)
+
+                            return () => reference.removeEventListener(event, callback)
+                        }
+                    })
+                }
+        </script>
         <script defer>
+            // Firebase Setup
             const firebaseConfig = {
-                // config
+                aapiKey: "AIzaSyA1WbwRQUmmSvfOhGWDKLgMSrt-SG6WVhI",
+                authDomain: "learn-firebase-430f7.firebaseapp.com",
+                projectId: "learn-firebase-430f7",
+                storageBucket: "learn-firebase-430f7.appspot.com",
+                messagingSenderId: "86573078455",
+                appId: "1:86573078455:web:d61d70f56b07de6ce0fa32",
+                measurementId: "G-FHSS6CEXQJ"
+                /**
+                 * ! Place connection script here
+                 * ...
+                 */
             }
 
             firebase.initializeApp(firebaseConfig)
 
             const firestore = firebase.firestore()
+
+            /**
+             * * Main Runtime
+             * 
+             * ? Anything which related to DOM should be run here.
+             */
+             main(() => {
+                
+                id("read").on("click", () => {
+                    id("title").textContent = " "
+
+                    firestore.collection('Student').doc('Name').set({
+                        Member1: 'Noyna',
+                        Member2: 'Pu',
+                        Member3: 'Disk',
+                        Member4: 'BK',
+                        Member5: 'Bank',
+                        Member6: 'Sunthorn',
+                        Member7: 'Aom',
+                        Member8: 'Kaw',
+                        Member9: 'Jump',
+                        Member10: 'Mameaw'
+                    })
+
+                    firestore.collection('Student').doc('Name').get().then(doc =>{
+                        const data = doc.data()
+
+                        id('title').textContent = data.Member1
+                        id('title2').textContent = data.Member2
+                        id('title3').textContent = data.Member3
+                        id('title4').textContent = data.Member4
+                      	id('title5').textContent = data.Member5
+                      	id('title6').textContent = data.Member6
+                      	id('title7').textContent = data.Member7
+                        id('title8').textContent = data.Member8
+                      	id('title9').textContent = data.Member9
+                      	id('title10').textContent = data.Member10
+                    })
+                })
+            })
         </script>
     </head>
     <body>
-        <!-- Body -->
+    <div class="wrap">
+      <h1>
+        Co-Worker_Learing for firebase
+      </h1>
+        <h1 id=title >Member 1</h1>
+        <h1 id=title2 >Member 2</h1>
+        <h1 id=title3 >Member 3</h1>
+      	<h1 id=title4 >Member 4</h1>
+        <h1 id=title5 >Member 5</h1>
+        <h1 id=title6 >Member 6</h1>
+        <h1 id=title7 >Member 7</h1>
+        <h1 id=title8 >Member 8</h1>
+        <h1 id=title9 >Member 9</h1>
+        <h1 id=title10 >Member 10</h1>
+        <button id=read>Read</button>
+    </div>
     </body>
+    <style>
+        .wrap{
+            text-align:center;
+        }
+        h1{
+            font-family: Courier, monospace;
+        }
+        button{
+            font-family: Courier, monospace;
+            background-color: aqua;
+            transform:scale(1.3);
+        }
+        button:hover{
+            animation: fade 0.5s infinite alternate;
+            }
+            @keyframes fade{
+            from{
+            }
+                to{transform:scale(2)}
+            }
+    </style>
 </html>
